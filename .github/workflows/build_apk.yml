@@ -20,14 +20,13 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v6
-
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
+      - name: Download Gradle
+        run: |
+          curl -fL https://services.gradle.org/distributions/gradle-9.3.1-bin.zip -o gradle.zip
+          unzip -q gradle.zip
 
       - name: Build Debug APK
-        run: bash ./gradlew assembleDebug --stacktrace
+        run: ./gradle-9.3.1/bin/gradle assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
